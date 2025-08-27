@@ -1,0 +1,119 @@
+import React from "react";
+import { motion } from "framer-motion";
+import { Card } from "@/components/ui/card";
+import { Award, Trophy, Code, Cloud, Target } from "lucide-react";
+
+const achievements = [
+  {
+    title: "Reliance Undergraduate Scholarship Awardee",
+    description: "Recognized for academic excellence and awarded prestigious scholarship for outstanding performance in engineering studies",
+    icon: Trophy,
+    color: "from-yellow-500 to-orange-600",
+    category: "Academic Excellence"
+  },
+  {
+    title: "650+ Coding Problems Solved",
+    description: "Demonstrated consistent problem-solving skills across multiple coding platforms including LeetCode, HackerRank, and CodeChef",
+    icon: Code,
+    color: "from-green-500 to-emerald-600",
+    category: "Programming Skills"
+  },
+  {
+    title: "AWS APAC Solutions Architecture",
+    description: "Completed Virtual Experience Program gaining hands-on experience with cloud architecture and AWS services implementation",
+    icon: Cloud,
+    color: "from-blue-500 to-indigo-600",
+    category: "Cloud Computing"
+  }
+];
+
+const stats = [
+  { number: "650+", label: "Problems Solved", icon: Target },
+  { number: "3+", label: "Major Projects", icon: Code },
+  { number: "1", label: "Internship", icon: Award },
+  { number: "100%", label: "Dedication", icon: Trophy }
+];
+
+export default function AchievementsSection() {
+  return (
+    <section id="achievements" className="py-20 px-4">
+      <div className="max-w-7xl mx-auto">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true }}
+          className="text-center mb-16"
+        >
+          <h2 className="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white mb-6">
+            Achievements & <span className="gradient-text">Recognition</span>
+          </h2>
+          <div className="w-20 h-1 bg-gradient-to-r from-teal-500 to-blue-600 mx-auto mb-6"></div>
+          <p className="text-xl text-slate-600 dark:text-slate-300 max-w-3xl mx-auto">
+            Milestones that reflect my commitment to excellence and continuous learning
+          </p>
+        </motion.div>
+
+        {/* Stats Grid */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          viewport={{ once: true }}
+          className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-16"
+        >
+          {stats.map((stat, index) => (
+            <Card key={index} className="p-6 text-center shadow-xl border-0 bg-white dark:bg-slate-900/50 hover:shadow-2xl transition-all duration-500">
+              <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-gradient-to-r from-teal-500 to-blue-600 flex items-center justify-center">
+                <stat.icon className="w-6 h-6 text-white" />
+              </div>
+              <div className="text-3xl font-bold text-slate-900 dark:text-white mb-2">
+                {stat.number}
+              </div>
+              <div className="text-slate-600 dark:text-slate-300 text-sm font-medium">
+                {stat.label}
+              </div>
+            </Card>
+          ))}
+        </motion.div>
+
+        {/* Achievements Grid */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {achievements.map((achievement, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: index * 0.2 }}
+              viewport={{ once: true }}
+            >
+              <Card className="p-8 h-full shadow-xl border-0 bg-white dark:bg-slate-900/50 hover:shadow-2xl transition-all duration-500 group">
+                {/* Icon */}
+                <div className={`w-16 h-16 mx-auto mb-6 rounded-2xl bg-gradient-to-r ${achievement.color} flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}>
+                  <achievement.icon className="w-8 h-8 text-white" />
+                </div>
+
+                {/* Category Badge */}
+                <div className="text-center mb-4">
+                  <span className={`px-3 py-1 bg-gradient-to-r ${achievement.color} text-white text-xs font-semibold rounded-full`}>
+                    {achievement.category}
+                  </span>
+                </div>
+
+                {/* Content */}
+                <div className="text-center">
+                  <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-4 leading-tight">
+                    {achievement.title}
+                  </h3>
+                  <p className="text-slate-600 dark:text-slate-300 leading-relaxed">
+                    {achievement.description}
+                  </p>
+                </div>
+              </Card>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}

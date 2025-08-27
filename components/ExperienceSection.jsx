@@ -1,0 +1,143 @@
+import React from "react";
+import { motion } from "framer-motion";
+import { Card } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Briefcase, Calendar, MapPin, Code2 } from "lucide-react";
+
+const experience = [
+  {
+    company: "Voice of Truth",
+    position: "Software Developer Intern",
+    duration: "May 2025 - July 2025",
+    location: "Remote",
+    type: "Internship",
+    contributions: [
+      "Built robust REST APIs using Golang and Gin framework for scalable backend services",
+      "Developed responsive Flutter UI components and integrated them with backend APIs",
+      "Collaborated with cross-functional teams to deliver high-quality software solutions",
+      "Implemented efficient database queries and optimized API performance"
+    ],
+    technologies: ["Golang", "Gin Framework", "Flutter", "REST APIs", "Backend Development"],
+    color: "from-blue-500 to-indigo-600"
+  }
+];
+
+export default function ExperienceSection() {
+  return (
+    <section id="experience" className="py-20 px-4 bg-slate-50 dark:bg-slate-800/50">
+      <div className="max-w-7xl mx-auto">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true }}
+          className="text-center mb-16"
+        >
+          <h2 className="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white mb-6">
+            Professional <span className="gradient-text">Experience</span>
+          </h2>
+          <div className="w-20 h-1 bg-gradient-to-r from-teal-500 to-blue-600 mx-auto mb-6"></div>
+          <p className="text-xl text-slate-600 dark:text-slate-300 max-w-3xl mx-auto">
+            Building real-world solutions and gaining valuable industry experience
+          </p>
+        </motion.div>
+
+        <div className="max-w-4xl mx-auto">
+          {experience.map((exp, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: index * 0.2 }}
+              viewport={{ once: true }}
+              className="relative"
+            >
+              {/* Timeline Line */}
+              <div className="absolute left-8 top-20 bottom-0 w-px bg-gradient-to-b from-teal-500 to-blue-600"></div>
+              
+              {/* Timeline Dot */}
+              <div className="absolute left-6 top-16 w-5 h-5 rounded-full bg-gradient-to-r from-teal-500 to-blue-600 ring-4 ring-white dark:ring-slate-900 shadow-lg"></div>
+
+              <Card className="ml-16 p-8 shadow-xl border-0 bg-white dark:bg-slate-900/50 hover:shadow-2xl transition-all duration-500">
+                {/* Header */}
+                <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-6 gap-4">
+                  <div>
+                    <div className="flex items-center gap-3 mb-2">
+                      <div className={`p-2 rounded-lg bg-gradient-to-r ${exp.color}`}>
+                        <Briefcase className="w-5 h-5 text-white" />
+                      </div>
+                      <div>
+                        <h3 className="text-2xl font-bold text-slate-900 dark:text-white">
+                          {exp.position}
+                        </h3>
+                        <p className="text-lg text-teal-600 dark:text-teal-400 font-semibold">
+                          {exp.company}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="flex flex-col sm:flex-row gap-2">
+                    <Badge variant="outline" className="flex items-center gap-1 px-3 py-1">
+                      <Calendar className="w-3 h-3" />
+                      {exp.duration}
+                    </Badge>
+                    <Badge variant="outline" className="flex items-center gap-1 px-3 py-1">
+                      <MapPin className="w-3 h-3" />
+                      {exp.location}
+                    </Badge>
+                    <Badge className={`bg-gradient-to-r ${exp.color} text-white px-3 py-1`}>
+                      {exp.type}
+                    </Badge>
+                  </div>
+                </div>
+
+                {/* Contributions */}
+                <div className="mb-6">
+                  <h4 className="text-lg font-semibold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
+                    <Code2 className="w-5 h-5 text-teal-500" />
+                    Key Contributions
+                  </h4>
+                  <ul className="space-y-3">
+                    {exp.contributions.map((contribution, contribIndex) => (
+                      <motion.li
+                        key={contribIndex}
+                        initial={{ opacity: 0, x: 20 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.6, delay: contribIndex * 0.1 }}
+                        viewport={{ once: true }}
+                        className="flex items-start gap-3"
+                      >
+                        <span className="w-2 h-2 bg-gradient-to-r from-teal-500 to-blue-600 rounded-full mt-2 flex-shrink-0"></span>
+                        <span className="text-slate-600 dark:text-slate-300 leading-relaxed">
+                          {contribution}
+                        </span>
+                      </motion.li>
+                    ))}
+                  </ul>
+                </div>
+
+                {/* Technologies */}
+                <div>
+                  <h4 className="text-sm font-semibold text-slate-700 dark:text-slate-400 mb-3">
+                    Technologies Used:
+                  </h4>
+                  <div className="flex flex-wrap gap-2">
+                    {exp.technologies.map((tech, techIndex) => (
+                      <span
+                        key={techIndex}
+                        className="px-3 py-1 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-full text-sm font-medium hover:bg-teal-100 hover:text-teal-700 dark:hover:bg-teal-900/30 dark:hover:text-teal-300 transition-colors duration-200"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </Card>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}

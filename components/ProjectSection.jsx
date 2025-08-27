@@ -1,0 +1,159 @@
+import React, { useMemo, useState } from "react";
+import { motion } from "framer-motion";
+import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { ExternalLink, Github } from "lucide-react";
+
+const FALLBACKS = {
+  paddy: "https://images.unsplash.com/photo-1574268438462-6c3c2d9d8ad5?w=400&h=250&fit=crop&crop=center",
+  movies: "https://images.unsplash.com/photo-1489599953248-e3fa2d5f2b9d?w=400&h=250&fit=crop&crop=center",
+}
+
+const projects = [
+  {
+    title: "Crop Yield Prediction App",
+    description: [
+      "Built comprehensive Flutter mobile app with ML integration for agricultural predictions",
+      "Implemented Flask backend with machine learning models for crop yield forecasting",
+      "Integrated weather APIs and soil analysis features for accurate predictions"
+    ],
+    techStack: ["Flutter", "Machine Learning", "Flask", "Python", "APIs"],
+    colors: {
+      gradient: "from-green-500 to-emerald-600",
+      bg: "from-green-50 to-emerald-50 dark:from-green-900/10 dark:to-emerald-900/10"
+    },
+  mockup: "/paddy.jpg",
+  fallbackKey: 'paddy',
+  category: 'Mobile',
+  },
+  {
+    title: "Movie Recommendation System",
+    description: [
+      "Developed intelligent movie recommendation engine using NLP and collaborative filtering",
+      "Built responsive Flask web application with TMDB API integration",
+      "Implemented advanced algorithms for personalized movie suggestions"
+    ],
+    techStack: ["NLP", "Flask", "TMDB API", "Python", "Machine Learning"],
+    colors: {
+      gradient: "from-purple-500 to-pink-600",
+      bg: "from-purple-50 to-pink-50 dark:from-purple-900/10 dark:to-pink-900/10"
+    },
+  mockup: "/movies.jpg",
+  fallbackKey: 'movies',
+  category: 'Web',
+  }
+];
+
+export default function ProjectsSection() {
+  const [filter, setFilter] = useState('All')
+  const filters = ['All', 'Web', 'Mobile']
+  const filtered = useMemo(() => filter === 'All' ? projects : projects.filter(p => p.category === filter), [filter])
+  return (
+    <section id="projects" className="py-20 px-4">
+      <div className="max-w-7xl mx-auto">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true }}
+          className="text-center mb-16"
+        >
+          <h2 className="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white mb-6">
+            Featured <span className="gradient-text">Projects</span>
+          </h2>
+          <div className="w-20 h-1 bg-gradient-to-r from-teal-500 to-blue-600 mx-auto mb-6"></div>
+          <p className="text-xl text-slate-600 dark:text-slate-300 max-w-3xl mx-auto">
+            Showcasing my passion for building innovative solutions that solve real-world problems
+          </p>
+        </motion.div>
+
+        <div className="flex justify-center gap-3 mb-10">
+          {filters.map(f => (
+            <button key={f} onClick={() => setFilter(f)} className={`px-4 py-2 rounded-full text-sm border ${filter===f? 'bg-teal-500 text-white border-teal-500' : 'border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800'}`}>
+              {f}
+            </button>
+          ))}
+        </div>
+
+        <div className="grid md:grid-cols-2 gap-8">
+          {filtered.map((project, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: index * 0.2 }}
+              viewport={{ once: true }}
+            >
+              <Card className="overflow-hidden shadow-2xl border-0 bg-white dark:bg-slate-900/50 hover:shadow-3xl transition-all duration-500 group">
+                {/* Project Image */}
+                <div className="relative overflow-hidden">
+                  <div className={`absolute inset-0 bg-gradient-to-br ${project.colors.bg} opacity-90`}></div>
+                  <img
+                    src={project.mockup}
+                    alt={project.title}
+                    className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-700"
+                    onError={(e) => {
+                      e.currentTarget.onerror = null
+                      const url = FALLBACKS[project.fallbackKey]
+                      if (url) e.currentTarget.src = url
+                    }}
+                  />
+                  <div className={`absolute top-4 left-4 px-3 py-1 bg-gradient-to-r ${project.colors.gradient} text-white text-sm font-semibold rounded-full`}>
+                    Featured
+                  </div>
+                </div>
+
+                <div className="p-8">
+                  <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-4">
+                    {project.title}
+                  </h3>
+                  
+                  <ul className="space-y-2 text-slate-600 dark:text-slate-300 mb-6">
+                    {project.description.map((point, pointIndex) => (
+                      <li key={pointIndex} className="flex items-start gap-2">
+                        <span className="w-1.5 h-1.5 bg-teal-500 rounded-full mt-2 flex-shrink-0"></span>
+                        <span>{point}</span>
+                      </li>
+                    ))}
+                  </ul>
+
+                  {/* Tech Stack */}
+                  <div className="mb-6">
+                    <h4 className="text-sm font-semibold text-slate-700 dark:text-slate-400 mb-3">Tech Stack:</h4>
+                    <div className="flex flex-wrap gap-2">
+                      {project.techStack.map((tech, techIndex) => (
+                        <span
+                          key={techIndex}
+                          className={`px-3 py-1 bg-gradient-to-r ${project.colors.gradient} text-white text-xs font-medium rounded-full`}
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Action Buttons */}
+                  <div className="flex gap-4">
+                    <Button
+                      variant="outline"
+                      className="flex-1 group-hover:border-teal-500 transition-colors duration-300"
+                    >
+                      <Github className="w-4 h-4 mr-2" />
+                      Source Code
+                    </Button>
+                    <Button
+                      className={`flex-1 bg-gradient-to-r ${project.colors.gradient} hover:opacity-90 transition-opacity duration-300`}
+                    >
+                      <ExternalLink className="w-4 h-4 mr-2" />
+                      Live Demo
+                    </Button>
+                  </div>
+                </div>
+              </Card>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
